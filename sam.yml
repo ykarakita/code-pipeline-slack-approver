@@ -21,7 +21,7 @@ Resources:
   helloworld:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: app.zip
+      CodeUri: target/app.zip
       Handler: app.handler
       Runtime: ruby2.5
       Description: A starter AWS Lambda function.

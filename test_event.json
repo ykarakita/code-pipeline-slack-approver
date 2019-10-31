@@ -1,5 +1,22 @@
 {
-  "key1": "value1",
-  "key2": "value2",
-  "key3": "value3"
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn": "arn:aws:sns:ap-northeast-1:123456789012:CodePipelineApproveAction:7e33cd05-3364-4857-9138-3d6aaaa4dcf4",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "67e8024f-7407-528a-82d1-547b8359aaaa",
+        "TopicArn": "arn:aws:sns:ap-northeast-1:123456789012:CodePipelineApproveAction",
+        "Subject": "APPROVAL NEEDED: AWS CodePipeline TestPipeline for action Approve",
+        "Message": "{\"region\":\"ap-northeast-1\",\"consoleLink\":\"https://console.aws.amazon.com/codepipeline/home?region=ap-northeast-1#/view/TestPipeline\",\"approval\":{\"pipelineName\":\"TestPipeline\",\"stageName\":\"Approve\",\"actionName\":\"Approve\",\"token\":\"\",\"expires\":\"2019-11-07T14:52Z\",\"externalEntityLink\":\"http://example.com\",\"approvalReviewLink\":\"https://console.aws.amazon.com/codepipeline/home?region=ap-northeast-1#/view/7b1ad709-b722-4baa-9e36-fdb17ead8a2b\",\"customData\":null}}",
+        "Timestamp": "2019-10-31T14:52:14.255Z",
+        "SignatureVersion": "1",
+        "Signature": "",
+        "SigningCertUrl": "https://sns.ap-northeast-1.amazonaws.com/SimpleNotificationService-1234567890.pem",
+        "UnsubscribeUrl": "https://sns.ap-northeast-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:ap-northeast-1:123456789012:CodePipelineApproveAction:7e33cd05-3364-4857-9138-3d6a068aaaa4",
+        "MessageAttributes": {}
+      }
+    }
+  ]
 }

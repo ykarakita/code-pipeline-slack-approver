@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Approve CodePipeline Approve Action with Slack
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: CodePipelineSlackApproval
+    Description: Approve CodePipeline Approve Action with Slack
+    Author: ykarakita
+    HomePageUrl: https://github.com/ykarakita/code-pipeline-slack-approval
+    SourceCodeUrl: https://github.com/ykarakita/code-pipeline-slack-approval
+    ReadmeUrl: README.md
+    SpdxLicenseId: MIT
+    LicenseUrl: LICENSE
+    Labels:
+      - CodePipeline
+      - Slack
+    SemanticVersion: 0.0.1
+
+Resources:
+  helloworld:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: app.zip
+      Handler: app.handler
+      Runtime: ruby2.5
+      Description: A starter AWS Lambda function.
+      MemorySize: 128
+      Timeout: 3

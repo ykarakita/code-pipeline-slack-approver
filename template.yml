@@ -21,12 +21,13 @@ Metadata:
     Labels:
       - CodePipeline
       - Slack
-    SemanticVersion: 0.0.1
+    SemanticVersion: 0.0.2
 
 Resources:
   NotifyApprovalAction:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: ./target/app.zip
       Handler: app/notify_approval_action.handler
       Runtime: ruby2.5
       Description: A starter AWS Lambda function.
@@ -53,6 +54,7 @@ Resources:
   ApprovalResultCallback:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: ./target/app.zip
       Handler: app/approval_result_callback.handler
       Runtime: ruby2.5
       Description: A starter AWS Lambda function.

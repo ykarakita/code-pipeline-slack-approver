@@ -2,6 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Approve CodePipeline Approve Action with Slack
 
+Parameters:
+  SlackUrl:
+    Type: String
+
 Metadata:
   AWS::ServerlessRepo::Application:
     Name: CodePipelineSlackApproval
@@ -15,23 +19,39 @@ Metadata:
     Labels:
       - CodePipeline
       - Slack
-    SemanticVersion: 0.0.2
+    SemanticVersion: 0.0.8
 
 Resources:
-  helloworld:
+  NotifyApprovalAction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: target/app.zip
-      Handler: app.handler
+      Handler: app/notify_approval_action.handler
       Runtime: ruby2.5
       Description: A starter AWS Lambda function.
       MemorySize: 128
       Timeout: 3
+      Environment:
+        Variables:
+          SLACK_URL: !Ref SlackUrl
       Events:
         SNS:
           Type: SNS
           Properties:
             Topic: !Ref Topic
+  ApprovalCallback:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app/approval_callback.handler
+      Runtime: ruby2.5
+      Description: A starter AWS Lambda function.
+      MemorySize: 128
+      Timeout: 3
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /approve
+            Method: post
   Topic:
     Type: 'AWS::SNS::Topic'
     Properties:

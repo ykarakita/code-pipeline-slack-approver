@@ -12,4 +12,4 @@ mkdir target
 zip -r target/app.zip ./app
 
 sam package --region ap-northeast-1 --template-file template.yml --output-template-file target/packaged.yml --s3-bucket sam-artifacts-524176662322-ap-northeast-1
-sam deploy --template-file target/packaged.yml --stack-name slack-codepipeline --capabilities CAPABILITY_IAM --parameter-overrides $PARAMS
+sam publish --region ap-northeast-1 --template target/packaged.yml

@@ -10,11 +10,11 @@ Parameters:
 
 Metadata:
   AWS::ServerlessRepo::Application:
-    Name: CodePipelineSlackApproval
+    Name: CodePipelineSlackApprover
     Description: Approve CodePipeline Approve Action with Slack
     Author: ykarakita
-    HomePageUrl: https://github.com/ykarakita/code-pipeline-slack-approval
-    SourceCodeUrl: https://github.com/ykarakita/code-pipeline-slack-approval
+    HomePageUrl: https://github.com/ykarakita/code-pipeline-slack-approver
+    SourceCodeUrl: https://github.com/ykarakita/code-pipeline-slack-approver
     ReadmeUrl: README.md
     SpdxLicenseId: MIT
     LicenseUrl: LICENSE
@@ -50,10 +50,10 @@ Resources:
                 - codepipeline:GetPipelineExecution
               Resource:
                 - !Sub "arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:${PipelineName}"
-  ApprovalCallback:
+  ApprovalResultCallback:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: app/approval_callback.handler
+      Handler: app/approval_result_callback.handler
       Runtime: ruby2.5
       Description: A starter AWS Lambda function.
       MemorySize: 128

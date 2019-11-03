@@ -39,7 +39,7 @@ Resources:
         SNS:
           Type: SNS
           Properties:
-            Topic: !Ref Topic
+            Topic: !Ref CodePipelineApprovalActionTopic
       Policies:
         - AWSLambdaExecute
         - Version: "2012-10-17"
@@ -73,7 +73,7 @@ Resources:
                 - codepipeline:PutApprovalResult
               Resource:
                 - !Sub "arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:${PipelineName}/*"
-  Topic:
+  CodePipelineApprovalActionTopic:
     Type: 'AWS::SNS::Topic'
     Properties:
-      TopicName: 'CodePipelineApproveAction'
+      TopicName: 'CodePipelineApprovalAction'

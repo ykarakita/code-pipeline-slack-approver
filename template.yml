@@ -5,8 +5,10 @@ Description: Approve CodePipeline Approve Action with Slack
 Parameters:
   SlackUri:
     Type: String
+    Description: "Your slack app incoming webhook URI"
   PipelineName:
     Type: String
+    Description: "CodePipeline pipeline name"
 
 Metadata:
   AWS::ServerlessRepo::Application:

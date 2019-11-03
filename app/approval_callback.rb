@@ -1,4 +1,5 @@
 require "cgi"
+require "aws-sdk-codepipeline"
 require "app/sender"
 
 def handler(event:, context:)
@@ -6,13 +7,23 @@ def handler(event:, context:)
   payload = JSON.parse(CGI.parse(event_body)["payload"].first)
 
   username = payload["user"]["username"]
-  action = payload["actions"].first["value"] # approved | rejected
+  action_value = JSON.parse(payload["actions"].first["value"])
 
   sender = Sender.new(payload["response_url"])
-  response_body = {
-    "text": "#{action.capitalize!} by #{username}"
-  }
-  sender.send!(response_body)
+  sender.send!({
+    "text": "#{action_value["action"]} by #{username}"
+  })
+
+  client.put_approval_result({
+    pipeline_name: action_value["pipeline_name"],
+    stage_name: action_value["stage_name"],
+    action_name: action_value["action_name"],
+    result: {
+      summary: "#{action_value["action"]} by #{username}",
+      status: action_value["action"]
+    },
+    token: action_value["token"]
+  })
 
   {
     statusCode: 200,
@@ -20,4 +31,8 @@ def handler(event:, context:)
       text: "ok"
     })
   }
+end
+
+def client
+  Aws::CodePipeline::Client.new
 end

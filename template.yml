@@ -3,7 +3,9 @@ Transform: AWS::Serverless-2016-10-31
 Description: Approve CodePipeline Approve Action with Slack
 
 Parameters:
-  SlackUrl:
+  SlackUri:
+    Type: String
+  PipelineName:
     Type: String
 
 Metadata:
@@ -32,12 +34,22 @@ Resources:
       Timeout: 3
       Environment:
         Variables:
-          SLACK_URL: !Ref SlackUrl
+          SLACK_URI: !Ref SlackUri
       Events:
         SNS:
           Type: SNS
           Properties:
             Topic: !Ref Topic
+      Policies:
+        - AWSLambdaExecute
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - codepipeline:GetPipelineState
+                - codepipeline:GetPipelineExecution
+              Resource:
+                - !Sub "arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:${PipelineName}"
   ApprovalCallback:
     Type: AWS::Serverless::Function
     Properties:
@@ -52,6 +64,15 @@ Resources:
           Properties:
             Path: /approve
             Method: post
+      Policies:
+        - AWSLambdaExecute
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - codepipeline:PutApprovalResult
+              Resource:
+                - !Sub "arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:${PipelineName}/*"
   Topic:
     Type: 'AWS::SNS::Topic'
     Properties:

@@ -11,7 +11,7 @@ Parameters:
     Description: "CodePipeline pipeline name"
   TimeZone:
     Type: String
-    Default: Asia/Tokyo
+    Default: UTC
 
 Metadata:
   AWS::ServerlessRepo::Application:
@@ -87,3 +87,15 @@ Resources:
     Type: 'AWS::SNS::Topic'
     Properties:
       TopicName: 'CodePipelineApprovalAction'
+
+Outputs:
+  ServiceEndpoint:
+    Description: Register this URL to Slack Interactive Components Request URL
+    Value:
+      Fn::Join:
+        - ''
+        - - https://
+          - Ref: ServerlessRestApi
+          - ".execute-api"
+          - Ref: AWS::Region
+          - ".amazonaws.com/Prod/approve"

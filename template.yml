@@ -96,6 +96,6 @@ Outputs:
         - ''
         - - https://
           - Ref: ServerlessRestApi
-          - ".execute-api"
+          - ".execute-api."
           - Ref: AWS::Region
           - ".amazonaws.com/Prod/approve"

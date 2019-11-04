@@ -9,6 +9,9 @@ Parameters:
   PipelineName:
     Type: String
     Description: "CodePipeline pipeline name"
+  TimeZone:
+    Type: String
+    Default: Asia/Tokyo
 
 Metadata:
   AWS::ServerlessRepo::Application:
@@ -62,6 +65,9 @@ Resources:
       Description: A starter AWS Lambda function.
       MemorySize: 128
       Timeout: 3
+      Environment:
+        Variables:
+          TZ: !Ref TimeZone
       Events:
         Api:
           Type: Api

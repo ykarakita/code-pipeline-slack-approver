@@ -1,0 +1,17 @@
+version: 2.1
+jobs:
+  package-and-publish:
+    docker:
+      - image: lambci/lambda:build-python3.7
+    steps:
+      - checkout
+      - run: sam
+
+#workflows:
+#  version: 2
+#  package-and-publish:
+#    jobs:
+#      - package-and-publish:
+#          filters:
+#            tags:
+#              only: /v.*/

@@ -7,11 +7,11 @@ jobs:
       - checkout
       - run: sam
 
-#workflows:
-#  version: 2
-#  package-and-publish:
-#    jobs:
-#      - package-and-publish:
+workflows:
+  version: 2
+  package-and-publish:
+    jobs:
+      - package-and-publish:
 #          filters:
 #            tags:
 #              only: /v.*/

@@ -18,7 +18,7 @@ workflows:
   version: 2
   package-and-publish:
     jobs:
-      - package-and-publish
-          filters
+      - package-and-publish:
+          filters:
             tags:
               only: /v.*/

@@ -5,7 +5,14 @@ jobs:
       - image: lambci/lambda:build-python3.7
     steps:
       - checkout
-      - run: sam
+      - run: mkdir target
+      - run: zip -r target/app app LICENSE README.md
+      - run:
+          name: Package SAM Application
+          command: sam package --region us-east-1 --template-file template.yaml --output-template-file target/packaged.yaml --s3-bucket sam-artifacts-524176662322-us-east-1
+      - run:
+          name: Publish SAM Application
+          command: sam publish --region us-east-1 --template target/packaged.yaml
 
 workflows:
   version: 2

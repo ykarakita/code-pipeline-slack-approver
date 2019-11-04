@@ -40,7 +40,21 @@ class NotifyApprovalAction
                 emoji: true
               },
               style: "primary",
-              value: build_response_value(:approved)
+              value: build_response_value(:approved),
+              confirm: {
+                "title": {
+                  "type": "plain_text",
+                  "text": "Are you sure?"
+                },
+                "confirm": {
+                  "type": "plain_text",
+                  "text": "Approve"
+                },
+                "deny": {
+                  "type": "plain_text",
+                  "text": "Cancel"
+                }
+              }
             },
             {
               type: "button",

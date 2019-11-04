@@ -63,11 +63,21 @@ class ApprovalResultCallback
       blocks: [
         action_payload.payload["message"]["blocks"].first,
         {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: "#{emoji} #{action_payload.action} by #{action_payload.username} at #{action_payload.action_ts.to_s}"
-          }
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: "*Result:* #{emoji} #{action_payload.action}"
+            },
+            {
+              type: "mrkdwn",
+              text: "*ExecutedBy:* #{action_payload.username}"
+            },
+            {
+              type: "mrkdwn",
+              text: "*ExecutedAt:* #{action_payload.action_ts.to_s}"
+            }
+          ]
         }
       ]
     }

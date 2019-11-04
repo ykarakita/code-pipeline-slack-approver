@@ -9,10 +9,20 @@ def handler(event:, context:)
   username = payload["user"]["username"]
   action_value = JSON.parse(payload["actions"].first["value"])
 
-  sender = Sender.new(payload["response_url"])
-  sender.send!({
-    "text": "#{action_value["action"]} by #{username}"
+  # Delete button from payload
+  payload["message"]["blocks"].delete_at(-1)
+
+  # Add action result to payload
+  payload["message"]["blocks"].push({
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text: "#{action_value["action"]} by #{username}"
+    }
   })
+
+  sender = Sender.new(payload["response_url"])
+  sender.send!(payload["message"])
 
   client.put_approval_result({
     pipeline_name: action_value["pipeline_name"],
@@ -25,12 +35,7 @@ def handler(event:, context:)
     token: action_value["token"]
   })
 
-  {
-    statusCode: 200,
-    body: JSON.generate({
-      text: "ok"
-    })
-  }
+  { statusCode: 200 }
 end
 
 def client

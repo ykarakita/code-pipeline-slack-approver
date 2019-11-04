@@ -19,6 +19,6 @@ workflows:
   package-and-publish:
     jobs:
       - package-and-publish
-#          filters
-#            tags:
-#              only: /v.*/
+          filters
+            tags:
+              only: /v.*/

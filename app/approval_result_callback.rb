@@ -1,6 +1,7 @@
 require "cgi"
 require "aws-sdk-codepipeline"
 require "app/sender"
+require "app/action_payload_parser"
 
 def handler(event:, context:)
   approval_result_callback = ApprovalResultCallback.new(event, context)
@@ -16,21 +17,8 @@ class ApprovalResultCallback
   end
 
   def response_to_user
-    # Delete button from payload
-    payload["message"]["blocks"].delete_at(-1)
-
-    # Add action result to payload
-    payload["message"]["blocks"].push(
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: "#{action_value["action"]} by #{username}"
-        }
-      }
-    )
-    sender = Sender.new(payload["response_url"])
-    sender.send!(payload["message"])
+    sender = Sender.new(action_payload.payload["response_url"])
+    sender.send!(response_params)
   end
 
   def pipeline_put_approval_result
@@ -40,8 +28,8 @@ class ApprovalResultCallback
         stage_name: action_value["stage_name"],
         action_name: action_value["action_name"],
         result: {
-          summary: "#{action_value["action"]} by #{username}",
-          status: action_value["action"]
+          summary: "#{action_payload.action} by #{action_payload.username}",
+          status: action_payload.action
         },
         token: action_value["token"]
       }
@@ -52,22 +40,36 @@ class ApprovalResultCallback
 
   attr_reader :event
 
-  def payload
-    return @payload unless @payload.nil?
-
+  def action_payload
     event_body = URI.decode(event["body"])
-    @payload = JSON.parse(CGI.parse(event_body)["payload"].first)
-  end
-
-  def username
-    payload["user"]["username"]
+    payload = JSON.parse(CGI.parse(event_body)["payload"].first)
+    @action_payload ||= ActionPayloadParser.new(payload)
   end
 
   def action_value
-    @action_value ||= JSON.parse(payload["actions"].first["value"])
+    action_payload.action_value
   end
 
   def client
     @client ||= Aws::CodePipeline::Client.new
+  end
+
+  def emoji
+    action_payload.action == "Approved" ? ":white_check_mark:" : ":x:"
+  end
+
+  def response_params
+    {
+      blocks: [
+        action_payload.payload["message"]["blocks"].first,
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "#{emoji} #{action_payload.action} by #{action_payload.username} at #{action_payload.action_ts.to_s}"
+          }
+        }
+      ]
+    }
   end
 end

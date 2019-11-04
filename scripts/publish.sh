@@ -2,12 +2,13 @@
 
 set -eu
 
-CONF=${1:-deploy.conf}
+cd `dirname $0`
 
+CONF=${1:-./deploy.conf}
 source $CONF
 
+cd ..
 rm -rf target
-
 mkdir target
 zip -r target/app app LICENSE README.md
 

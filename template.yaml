@@ -26,7 +26,7 @@ Metadata:
     Labels:
       - CodePipeline
       - Slack
-    SemanticVersion: 0.0.3
+    SemanticVersion: 0.0.5
 
 Resources:
   NotifyApprovalAction:

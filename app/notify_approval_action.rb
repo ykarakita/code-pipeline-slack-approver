@@ -42,17 +42,17 @@ class NotifyApprovalAction
               style: "primary",
               value: build_response_value(:approved),
               confirm: {
-                "title": {
-                  "type": "plain_text",
-                  "text": "Are you sure?"
+                title: {
+                  type: "plain_text",
+                  text: "Are you sure?"
                 },
-                "confirm": {
-                  "type": "plain_text",
-                  "text": "Approve"
+                confirm: {
+                  type: "plain_text",
+                  text: "Approve"
                 },
-                "deny": {
-                  "type": "plain_text",
-                  "text": "Cancel"
+                deny: {
+                  type: "plain_text",
+                  text: "Cancel"
                 }
               }
             },

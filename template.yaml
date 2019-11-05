@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Approve CodePipeline Approve Action with Slack
+Description: Perform AWS CodePipeline approval action from Slack
 
 Parameters:
   SlackUri:
@@ -11,12 +11,13 @@ Parameters:
     Description: "CodePipeline pipeline name"
   TimeZone:
     Type: String
+    Description: "TimeZone in your country. e.g. Asia/Tokyo"
     Default: UTC
 
 Metadata:
   AWS::ServerlessRepo::Application:
     Name: CodePipelineSlackApprover
-    Description: Approve CodePipeline Approve Action with Slack
+    Description: Perform AWS CodePipeline approval action from Slack
     Author: ykarakita
     HomePageUrl: https://github.com/ykarakita/code-pipeline-slack-approver
     SourceCodeUrl: https://github.com/ykarakita/code-pipeline-slack-approver
@@ -34,7 +35,7 @@ Resources:
       CodeUri: ./target/app.zip
       Handler: app/notify_approval_action.handler
       Runtime: ruby2.5
-      Description: A starter AWS Lambda function.
+      Description: Subscribe CodePipeline Approval action and notify.
       MemorySize: 128
       Timeout: 3
       Environment:
@@ -61,7 +62,7 @@ Resources:
       CodeUri: ./target/app.zip
       Handler: app/approval_result_callback.handler
       Runtime: ruby2.5
-      Description: A starter AWS Lambda function.
+      Description: Performe CodePipeline Approval action.
       MemorySize: 128
       Timeout: 3
       Environment:

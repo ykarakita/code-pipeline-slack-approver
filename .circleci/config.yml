@@ -12,7 +12,7 @@ jobs:
           command: sam package --region us-east-1 --template-file template.yaml --output-template-file target/packaged.yaml --s3-bucket sam-artifacts-524176662322-us-east-1
       - run:
           name: Publish SAM Application
-          command: sam publish --region us-east-1 --template target/packaged.yaml --semantic-version ${CIRCLE_TAG}
+          command: sam publish --region us-east-1 --template target/packaged.yaml --semantic-version `echo ${CIRCLE_TAG} | sed -e s/v//`
 
 workflows:
   version: 2

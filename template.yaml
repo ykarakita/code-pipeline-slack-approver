@@ -86,7 +86,7 @@ Resources:
   CodePipelineApprovalActionTopic:
     Type: 'AWS::SNS::Topic'
     Properties:
-      TopicName: 'CodePipelineApprovalAction'
+      TopicName: !Ref AWS::StackName
 
 Outputs:
   ServiceEndpoint:

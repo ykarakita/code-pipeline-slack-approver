@@ -67,15 +67,15 @@ class ApprovalResultCallback
           elements: [
             {
               type: "mrkdwn",
-              text: "*Result:* #{emoji} #{action_payload.action}"
+              text: "*result:* #{emoji} #{action_payload.action}"
             },
             {
               type: "mrkdwn",
-              text: "*ExecutedBy:* #{action_payload.username}"
+              text: "*performed by:* #{action_payload.username}"
             },
             {
               type: "mrkdwn",
-              text: "*ExecutedAt:* #{action_payload.action_ts.to_s}"
+              text: "*performed at:* #{action_payload.action_ts.to_s}"
             }
           ]
         }

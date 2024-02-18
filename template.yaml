@@ -34,7 +34,7 @@ Resources:
     Properties:
       CodeUri: ./target/app.zip
       Handler: app/notify_approval_action.handler
-      Runtime: ruby2.5
+      Runtime: ruby2.7
       Description: Subscribe CodePipeline Approval action and notify.
       MemorySize: 128
       Timeout: 3
@@ -61,7 +61,7 @@ Resources:
     Properties:
       CodeUri: ./target/app.zip
       Handler: app/approval_result_callback.handler
-      Runtime: ruby2.5
+      Runtime: ruby2.7
       Description: Performe CodePipeline Approval action.
       MemorySize: 128
       Timeout: 3
